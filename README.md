@@ -14,14 +14,14 @@ El único requisito es tener **Docker** y **Docker Compose** instalados.
 2.  Levanta los contenedores:
 ```bash
     docker-compose up -d --build
-    ```
+```
 3.  ¡Listo!
     * **Frontend:** `http://localhost:3000`
     * **Backend API:** `http://localhost:8080`
     * **Swagger Docs:** `http://localhost:8080/swagger`
 
 ---
-##  ## 🏛️ Arquitectura 
+## 🏛️ Arquitectura 
 ### Backend (.NET 8) Sigue los principios de **Clean Architecture**: 
 * `Core`: Entidades de dominio. 
 * `Application`: Casos de uso. 
