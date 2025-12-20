@@ -1,0 +1,62 @@
+# ========================
+# GENERAL / OS / IDEs
+# ========================
+.DS_Store
+Thumbs.db
+.vs/
+.vscode/
+*.user
+*.suo
+*.userprefs
+
+# ========================
+# BACKEND (.NET / C#)
+# ========================
+# Binarios compilados (No los queremos en Git, pesan mucho y se generan solos)
+[Bb]in/
+[Oo]bj/
+
+# Configuración de usuario y secretos
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Bases de datos locales (SQLite)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+
+# Logs
+*.log
+
+# ========================
+# FRONTEND (Vue / Node)
+# ========================
+# Dependencias (Esto es lo más pesado del universo, NUNCA subirlo)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build de producción
+web/dist/
+dist/
+
+# Archivos de entorno (Pueden tener claves API)
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
+
+# ========================
+# DOCKER (Opcional)
+# ========================
+docker-compose.override.yml
