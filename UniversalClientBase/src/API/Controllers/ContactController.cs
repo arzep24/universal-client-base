@@ -139,4 +139,12 @@ public class ContactController: ControllerBase
         await _repository.DeleteAsync(id);
         return NoContent();
     }
+
+
+    [HttpGet("test-error")]
+    public IActionResult TestError()
+    {
+        // Provocamos una excepción manual para probar el Middleware
+        throw new Exception("Esta es una prueba del Middleware de Errores Globales.");
+    }
 }

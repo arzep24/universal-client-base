@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using UniversalClientBase.Infrastructure.Data;
 using UniversalClientBase.Core.Interfaces;
 using UniversalClientBase.Infrastructure.Repositories;
+using UniversalClientBase.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Agregar el middleware de manejo de excepciones personalizado
+app.UseMiddleware<ExceptionMiddleware>();
 
 // 5. Configuración del pipeline de HTTP
 if (app.Environment.IsDevelopment())
