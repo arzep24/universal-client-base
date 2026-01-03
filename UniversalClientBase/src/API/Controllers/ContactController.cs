@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using UniversalClientBase.Application.Dtos;
 using UniversalClientBase.Core.Entities;
 using UniversalClientBase.Core.Interfaces;
+using UniversalClientBase.Core.Dtos;
 
 namespace UniversalClientBase.Controllers;
 
@@ -22,11 +23,11 @@ public class ContactController: ControllerBase
     // Obtener todos los contactos
     // ============================================
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Contact>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Contact>>> GetAll([FromQuery] ContactQueryParams queryParams)
     {
-        var contacts = await _repository.GetAllAsync();
+        var contacts = await _repository.GetAllAsync(queryParams);
 
-        // Mapeo manual de Entidad a DTO, dado que no querimos exponer la entidad directamente al cliente
+        // Mapeo manual de Entidad a DTO, dado que no queremos exponer la entidad directamente al cliente
         var contactDtos = contacts.Select(c => new ContactDto(
             c.Id,
             c.FirstName,

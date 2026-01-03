@@ -1,11 +1,12 @@
 using UniversalClientBase.Core.Entities;
+using UniversalClientBase.Core.Dtos;
 
 namespace UniversalClientBase.Core.Interfaces;
 
 public interface IContactRepository
 {
     // 1. LEER (Get)
-    Task<IEnumerable<Contact>> GetAllAsync();
+    Task<IEnumerable<Contact>> GetAllAsync(ContactQueryParams queryParams);
 
     Task<Contact?> GetByIdAsync(int id);
 
