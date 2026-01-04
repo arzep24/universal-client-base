@@ -1,8 +1,10 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using UniversalClientBase.Infrastructure.Data;
 using UniversalClientBase.Core.Interfaces;
 using UniversalClientBase.Infrastructure.Repositories;
 using UniversalClientBase.API.Middlewares;
+using UniversalClientBase.Application.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +22,13 @@ builder.Services.AddScoped<IContactRepository,ContactRepository>();
 // 3. Agregar soporte para controladores
 builder.Services.AddControllers();
 
+
 // 4. Agregar Swagger para documentación automática de la API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// 5. Agregar el validador de FluentValidation para Contact
+builder.Services.AddValidatorsFromAssemblyContaining<CreateContactValidator>();
 
 var app = builder.Build();
 

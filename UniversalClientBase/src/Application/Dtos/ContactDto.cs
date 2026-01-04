@@ -16,7 +16,8 @@ public record CreateContactDto(
     string FirstName,
     string Email,
     string? LastName,
-    string? Phone
+    string? Phone,
+    string? Status
 );
 
 public record UpdateContactDto(

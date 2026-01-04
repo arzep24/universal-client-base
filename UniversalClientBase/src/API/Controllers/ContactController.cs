@@ -3,6 +3,7 @@ using UniversalClientBase.Application.Dtos;
 using UniversalClientBase.Core.Entities;
 using UniversalClientBase.Core.Interfaces;
 using UniversalClientBase.Core.Dtos;
+using FluentValidation;
 
 namespace UniversalClientBase.Controllers;
 
@@ -11,11 +12,13 @@ namespace UniversalClientBase.Controllers;
 public class ContactController: ControllerBase
 {
     private readonly IContactRepository _repository;
+    private readonly IValidator<CreateContactDto> _validator;
 
     // Inyectando el repositorio a través del constructor
-    public ContactController(IContactRepository repository)
+    public ContactController(IContactRepository repository, IValidator<CreateContactDto> validator)
     {
         _repository = repository;
+        _validator = validator;
     }
 
     // ============================================
@@ -69,15 +72,29 @@ public class ContactController: ControllerBase
     // Creamos un nuevo contacto
     // ============================================
     [HttpPost]
-    public async Task<ActionResult<ContactDto>> Create(ContactDto createDto)
+    public async Task<ActionResult<ContactDto>> Create([FromBody] CreateContactDto dto)
     {
-        // 1. Convertir DTO a Entidad para guardarlo en la base de datos
+        
+
+        // 1. Validar el DTO de entrada
+        var validationResult = await _validator.ValidateAsync(dto);
+
+        if (!validationResult.IsValid)
+        {
+            // Devolver errores de validación al cliente
+            return BadRequest(new
+            {
+                Message = "Existen errores de validación. ",
+                Errors = validationResult.Errors.Select(e => new {e.PropertyName, e.ErrorMessage})
+            });
+        }
+        // Convertir DTO a Entidad para guardarlo en la base de datos
         var contact = new Contact
         {
-            FirstName = createDto.FirstName,
-            LastName = createDto.LastName,
-            Email = createDto.Email,
-            Phone = createDto.Phone,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Email = dto.Email,
+            Phone = dto.Phone,
             Status = "Prospecto",
             CreatedAt = DateTime.UtcNow
         };
@@ -140,11 +157,4 @@ public class ContactController: ControllerBase
         return NoContent();
     }
 
-
-    [HttpGet("test-error")]
-    public IActionResult TestError()
-    {
-        // Provocamos una excepción manual para probar el Middleware
-        throw new Exception("Esta es una prueba del Middleware de Errores Globales.");
-    }
 }
