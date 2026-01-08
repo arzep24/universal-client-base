@@ -1,0 +1,7 @@
+**/.git
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/infra/db
+UniversalClientBase/web/node_modules

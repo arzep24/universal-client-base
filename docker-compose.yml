@@ -1,0 +1,15 @@
+services:
+  ucb-backend:
+    container_name: ucb-api
+    build:
+      context: ./UniversalClientBase # Indicamos que el contexto es la subcarpeta
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/ucb_database.db
+    volumes:
+      - ./infra/db:/app/data # Persistencia en la raíz del repositorio
+    restart: always
