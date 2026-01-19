@@ -78,17 +78,18 @@ public class CobranzaController : ControllerBase
         return Ok(filtradas.Select(s => MapToSancionDto(s)));
     }
 
-    [HttpGet("sanciones/lista-trabajo")]
-    public async Task<ActionResult<IEnumerable<SancionDto>>> GetListaTrabajo()
+    [HttpGet("sanciones/lista-revision")]
+    public async Task<ActionResult<IEnumerable<SancionDto>>> GetListaRevision()
     {
-        var sanciones = await _sancionRepository.GetAllAsync();
+        var todas = await _sancionRepository.GetAllAsync();
         
-        // Filtramos solo los que requieren acción (7 o 14 días)
-        var pendientes = sanciones
-            .Where(s => s.EstatusSeguimiento.Contains("REVISIÓN") || s.EstatusSeguimiento.Contains("VENCIDO"))
-            .Select(s => MapToSancionDto(s));
+        // Filtramos usando la lógica dinámica de 7 y 14 días
+        var urgentes = todas.Where(s => 
+            (s.Estatus == "Pendiente" && (DateTime.Now - s.FechaSancion).TotalDays >= 7) ||
+            (s.Estatus == "Abonado" && s.FechaUltimoEstatus.HasValue && (DateTime.Now - s.FechaUltimoEstatus.Value).TotalDays >= 14)
+        );
 
-        return Ok(pendientes);
+        return Ok(urgentes.Select(s => MapToSancionDto(s)));
     }
 
     // ==========================================

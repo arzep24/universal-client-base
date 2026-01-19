@@ -5,7 +5,7 @@ services:
       context: ./UniversalClientBase # Indicamos que el contexto es la subcarpeta
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080

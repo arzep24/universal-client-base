@@ -15,6 +15,9 @@ Thumbs.db
 # Binarios compilados (No los queremos en Git, pesan mucho y se generan solos)
 [Bb]in/
 [Oo]bj/
+*.user
+*.suo
+*.shell
 
 # Configuración de usuario y secretos
 appsettings.Development.json
