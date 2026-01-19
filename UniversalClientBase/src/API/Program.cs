@@ -1,8 +1,9 @@
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using UniversalClientBase.Infrastructure.Data;
 using UniversalClientBase.Core.Interfaces;
-using UniversalClientBase.Infrastructure.Repositories;
+using UniversalClientBase.Infrastructure.Data.Repositories;
 using UniversalClientBase.API.Middlewares;
 using UniversalClientBase.Application.Validators;
 
@@ -16,8 +17,8 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connect
 
 // 2. REGISTRAR EL REPOSITORIO
 
-// Cuando se pide IContactRepository, se manda una instancia de ContactRepository
-builder.Services.AddScoped<IContactRepository,ContactRepository>(); 
+builder.Services.AddScoped<ISancionRepository, SancionRepository>();
+builder.Services.AddScoped<IRevisionRepository, RevisionRepository>();
 
 // 3. Agregar soporte para controladores
 builder.Services.AddControllers();
@@ -27,8 +28,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 5. Agregar el validador de FluentValidation para Contact
-builder.Services.AddValidatorsFromAssemblyContaining<CreateContactValidator>();
+// 5. Agregar el validador de FluentValidation para entidades
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<SancionValidator>();
 
 var app = builder.Build();
 

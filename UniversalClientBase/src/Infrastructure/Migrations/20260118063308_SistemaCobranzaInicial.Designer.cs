@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversalClientBase.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using UniversalClientBase.Infrastructure.Data;
 namespace UniversalClientBase.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260118063308_SistemaCobranzaInicial")]
+    partial class SistemaCobranzaInicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.1");
@@ -73,7 +76,7 @@ namespace UniversalClientBase.Infrastructure.Migrations
                     b.Property<DateTime>("FechaSancion")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("FechaUltimoEstatus")
+                    b.Property<DateTime>("FechaVencimiento")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Importe")
