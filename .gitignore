@@ -18,7 +18,8 @@ Thumbs.db
 *.user
 *.suo
 *.shell
-
+*.dll
+*.exe
 # Configuración de usuario y secretos
 appsettings.Development.json
 appsettings.Local.json
